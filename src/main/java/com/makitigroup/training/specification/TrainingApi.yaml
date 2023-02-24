@@ -1,0 +1,420 @@
+openapi: 3.0.3
+info:
+  title: Training Provider Application
+  description: API for booking training courses within a timeframe.
+  version: v1
+
+externalDocs:
+  description: Find out more about Swagger
+  url: https://swagger.io
+
+servers:
+  - url: tpa:8080/v1
+tags:
+  - name: health
+    description: Health Info Controller
+  - name: course
+    description: Course Controller
+  - name: booking
+    description: Booking Controller of Course
+  - name: booking item
+    description: Item of a Booking Controller
+
+paths:
+  /health:
+    get:
+      tags:
+        - Health
+      summary: Returns health status of this service group
+      description: Checks whenever database or other interfaces are available
+      operationId: health
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+        '401':
+          description:  User not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+        '500':
+          description: Application is down
+  /course:
+    post:
+      tags:
+        - Course
+      summary: Create a new training course
+      description: Create a new training course
+      operationId: createTrainingCourse
+      requestBody:
+        description: Create a new Training course
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        '405':
+          description: Invalid input
+    get:
+      tags:
+        - training course
+      summary: List all available courses
+      description: List all available courses
+      operationId: courseList
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+  /course/{id}:
+    put:
+      tags:
+        - Course
+      summary: Update an existing training course
+      description: Update an existing training course by Id
+      operationId: updateTrainingCourse
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Update an existent training course in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Course'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Course not found
+        '405':
+          description: Validation exception
+  /booking_item/{id}:
+    put:
+      tags:
+        - booking item
+      summary: Update an existing Booking item
+      description: Update an existing Booking item by Id
+      operationId: updateBookingItem
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Update an existent Booking item in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingItem'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/BookingItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BookingItem'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingItem'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/BookingItem'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Booking item not found
+        '405':
+          description: Validation exception
+    /booking_item:
+      post:
+        tags:
+          - booking item
+        summary: Add a new Booking item to the store
+        description: Add a new Booking Item to the store
+        operationId: addBookingItem
+        requestBody:
+          description: Create a new Booking Item in the store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingItem'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/BookingItem'
+            application/x-www-form-urlencoded:
+              schema:
+                $ref: '#/components/schemas/BookingItem'
+          required: true
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/BookingItem'
+              application/xml:
+                schema:
+                  $ref: '#/components/schemas/BookingItem'
+          '405':
+            description: Invalid input
+    /booking_item/list_by_period:
+      get:
+        tags:
+          - booking item
+        summary: List training courses in a specific period
+        description: ...
+        operationId: bookingItemListByPeriod
+        parameters:
+          - in: query
+            name: startDate
+            required: true
+            schema:
+              type: string
+          - in: query
+            name: endDate
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: successful operation
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/BookingItem'
+              application/xml:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/BookingItem'
+  /booking_item/available_date/{id}:
+    get:
+      tags:
+        - booking item
+      summary: List dates for a specific training course with his id
+      description: List dates for a specific training course with his id
+      operationId: datesForSpecificCourse
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookingItem'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookingItem'
+  /booking:
+    post:
+      tags:
+        - booking
+      summary: Place an order for a booking item
+      description: Place an order for a booking item
+      operationId: bookingItemOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booking'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Booking'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Booking'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+        '405':
+          description: Invalid input
+components:
+  schemas:
+    Health:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - UP
+            - DOWN
+    Booking:
+      required:
+        - bookingItemId
+        - customerId
+      type: object
+      properties:
+        bookingId:
+          type: integer
+          format: int64
+          example: 10
+        bookingItemId:
+          type: integer
+          format: int64
+          example: 72
+        customerId:
+          type: integer
+          format: int64
+          example: 19
+        date:
+          type: string
+          format: date-time
+        bookingStatus:
+          type: string
+          description: Booking Status
+          example: approved
+          enum:
+            - placed
+            - in progress
+            - ended
+            - canceled
+    BookingItem:
+      required:
+        - courseId
+        - courseMaxPeople
+        - courseStartDate
+        - courseEndDate
+        - status
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        courseId:
+          type: integer
+          format: int64
+          example: 198772
+        courseMaxPeople:
+          type: integer
+          format: int32
+          example: 10
+        courseStartDate:
+          type: string
+          format: date-time
+        courseEndDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+          description: Booking Item Status
+          example: open
+          enum:
+            - BOOKED
+            - PENDING
+            - REFUSED
+    Course:
+      required:
+        - name
+        - description
+        - lecturers
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: React Native
+        description:
+          type: string
+          example: You can use React Native today in your existing Android and iOS projects or you can create a whole new app from scratch.
+        lecturers:
+          type: array
+          items:
+            type: string
+            example: Marie-Josée, Jean, Jaygen
+        price:
+          type: number
+          example: 135.99
+        currency:
+          type: string
+          enum:
+            - EUR
+            - USD
+            - XAF
+          example: XAF
+        maxPeople:
+          type: integer
+          format: int32
+          example: 7
+          maximum: 10
+        startDateTime:
+          type: string
+          format: date-time
+        endDateTime:
+          type: string
+          format: date-time
+        status:
+          type: string
+          description: Course booking Item Status
+          example: AVAILABLE
+          enum:
+            - AVAILABLE
+            - ONGOING
+            - PASSED
+  requestBodies:
+    course:
+      description: course object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Course'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Course'
