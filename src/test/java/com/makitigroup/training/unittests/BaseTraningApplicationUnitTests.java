@@ -1,10 +1,10 @@
-package com.makitigroup.training;
+package com.makitigroup.training.unittests;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringBootDataMongodbApplicationTests {
+class BaseTraningApplicationUnitTests {
 
 	@Test
 	void contextLoads() {

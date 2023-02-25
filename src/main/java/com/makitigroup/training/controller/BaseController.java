@@ -12,12 +12,12 @@ public abstract class BaseController {
 
     protected CourseRepository courseRepository;
 
+    @Autowired
     protected HealthService healthService;
 
 
 
-    @Autowired
-    public BaseController(CourseService courseService, CourseRepository courseRepository, HealthService healthService){
+    public BaseController(@Autowired CourseService courseService, @Autowired CourseRepository courseRepository, HealthService healthService){
         this.courseService = courseService;
         this.courseRepository = courseRepository;
         this.courseRepository = courseRepository;

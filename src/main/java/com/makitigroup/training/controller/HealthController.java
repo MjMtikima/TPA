@@ -1,5 +1,6 @@
 package com.makitigroup.training.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ser.Serializers;
 import com.makitigroup.training.Service.CourseService;
 import com.makitigroup.training.Service.HealthService;
@@ -7,6 +8,7 @@ import com.makitigroup.training.model.Course;
 import com.makitigroup.training.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +23,8 @@ public class HealthController extends BaseController {
         super(courseService, courseRepository, healthService);
     }
 
-    @GetMapping("/status")
+
+    @GetMapping(value ="/status", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getHealthyness(){
 
         if (this.healthService.getDatabaseConnexionHealthy().size() > 0){
