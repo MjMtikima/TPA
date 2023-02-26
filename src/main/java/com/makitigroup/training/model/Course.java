@@ -5,7 +5,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.HashMap;
 
 @Document(collection = "course")
 public class Course {

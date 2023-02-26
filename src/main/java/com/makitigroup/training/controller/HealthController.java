@@ -1,12 +1,8 @@
 package com.makitigroup.training.controller;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.makitigroup.training.Service.CourseService;
 import com.makitigroup.training.Service.HealthService;
-import com.makitigroup.training.model.Course;
 import com.makitigroup.training.repository.CourseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

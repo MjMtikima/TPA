@@ -20,6 +20,5 @@ public abstract class BaseController {
     public BaseController(@Autowired CourseService courseService, @Autowired CourseRepository courseRepository, HealthService healthService){
         this.courseService = courseService;
         this.courseRepository = courseRepository;
-        this.courseRepository = courseRepository;
     }
 }

@@ -1,10 +1,6 @@
 package com.makitigroup.training.integrationtests;
 
-import java.util.Map;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -22,7 +18,7 @@ import static org.assertj.core.api.BDDAssertions.then;
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {"management.port=0"})
-public class BaseTraningApplicationIntegrationTests {
+ class BaseTraningApplicationIntegrationTests {
 
     @LocalServerPort
     private static final int SERVER_PORT = 9000;
@@ -51,7 +47,7 @@ public class BaseTraningApplicationIntegrationTests {
     }
 
     @Test
-    public void shouldReturn200WhenSendingRequestToHealthController() throws Exception {
+     void shouldReturn200WhenSendingRequestToHealthController() throws Exception {
         @SuppressWarnings("rawtypes")
         ResponseEntity<String> entity = this.testRestTemplate.getForEntity(
                 BaseTraningApplicationIntegrationTests.BASE_URL + BaseTraningApplicationIntegrationTests.SERVER_PORT + BaseTraningApplicationIntegrationTests.SERVICE_GROUP + BaseTraningApplicationIntegrationTests.VERSION + BaseTraningApplicationIntegrationTests.HEALTH_STATUS_URL, String.class);
@@ -62,7 +58,7 @@ public class BaseTraningApplicationIntegrationTests {
 
 
     @Test
-    public void shouldReturn200WhenSendingRequestToManagementEndpoint() throws Exception {
+     void shouldReturn200WhenSendingRequestToManagementEndpoint() throws Exception {
         @SuppressWarnings("rawtypes")
         ResponseEntity<String> entity = this.testRestTemplate.getForEntity(
                 this.BASE_URL + this.SERVER_PORT + this.SERVICE_GROUP + this.VERSION + COURSE_GETALL_URL, String.class);
