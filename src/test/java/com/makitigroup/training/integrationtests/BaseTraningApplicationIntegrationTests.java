@@ -29,22 +29,12 @@ import static org.assertj.core.api.BDDAssertions.then;
 
     private static final String HEALTH_STATUS_URL = "/health/status";
 
-
     private static final String COURSE_GETALL_URL = "/course/all";
 
     private static final String SERVICE_GROUP = "/tpa";
 
-
     @Autowired
     private TestRestTemplate testRestTemplate;
-
-    /**
-     *
-     * @return this testRestTemplate
-     */
-    public TestRestTemplate getTestRestTemplate(){
-        return this.testRestTemplate;
-    }
 
     @Test
      void shouldReturn200WhenSendingRequestToHealthController() throws Exception {
@@ -54,8 +44,6 @@ import static org.assertj.core.api.BDDAssertions.then;
 
         then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
-
-
 
     @Test
      void shouldReturn200WhenSendingRequestToManagementEndpoint() throws Exception {
